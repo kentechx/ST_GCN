@@ -1,0 +1,40 @@
+GENERAL:
+  experiment: st_data2_face_gcn
+  seed: 123
+
+DATA:
+  root_dir: ../datasets/st_data2
+  batch_size: 1      # batchsize per gpu
+  suffix: .pth
+#  num_points: 20000    # sample
+  # augmentation
+  augmentation: True
+
+STRUCTURE:
+  i_node_channels: 15
+  i_edge_channels: 1
+  o_channels: 2
+  hidden_channels: 64
+  num_layers: 28
+
+TRAIN:
+  max_epochs: 10
+  weight_decay: 0.0001
+  load_from_checkpoint:
+  resume_from_checkpoint:
+
+  # one cycle lr scheduler
+  lr_max: 0.001
+  pct_start: 0.1    # percentage of the cycle spent increasing lr
+  div_factor: 25    # determine the initial lr (lr_max / div_factor)
+  final_div_factor: 1e4   # determine the final lr (lr_max / final_div_factor)
+  start_epoch: 0
+
+  train_folder: train
+  train_workers: 0
+
+  val_workers: 0
+  val_folder: val
+
+  test_workers: 4
+  test_folder: val

@@ -7,6 +7,7 @@ def get_parser():
     import argparse, yaml
     parser = argparse.ArgumentParser(description='Tooth Classification')
     parser.add_argument("--config", type=str, default="config/teethgnn_dental20000.yaml", help="path to config file")
+    parser.add_argument("--gpus", type=int, default=1)
 
     args_cfg = parser.parse_args()
     with open(args_cfg.config, 'r') as f:
@@ -31,7 +32,7 @@ if __name__ == "__main__":
 
     debug = False
     debug_args = {'limit_train_batches': 10} if debug else {}
-    trainer = pl.Trainer(logger, gpus=1, max_epochs=args.max_epochs, progress_bar_refresh_rate=10, callbacks=[callback],
+    trainer = pl.Trainer(logger, gpus=args.gpus, max_epochs=args.max_epochs, progress_bar_refresh_rate=10, callbacks=[callback],
                          resume_from_checkpoint=args.resume_from_checkpoint, **debug_args)
     trainer.fit(model)
 

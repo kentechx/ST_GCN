@@ -1,6 +1,6 @@
 import torch, random, numpy as np, torch.nn.functional as F, torch.nn as nn
 from torch.utils.data import DataLoader
-from models.teethgnn import TeethGNN
+from models.my_dgcnn import MyDGCNN_Seg
 # from data.dental import DentalSegDataset
 from data.dental_sample import DentalSegDataset
 from data.common import calc_features
@@ -13,7 +13,7 @@ class LitTeethGNN(pl.LightningModule):
     def __init__(self, args):
         super().__init__()
         self.save_hyperparameters()
-        self.net = TeethGNN(args)
+        self.net = MyDGCNN_Seg(args)
         self.train_iou = torchmetrics.IoU(17, ignore_index=0)
         self.val_iou = torchmetrics.IoU(17, ignore_index=0)
         self.test_iou = torchmetrics.IoU(17, ignore_index=0)
